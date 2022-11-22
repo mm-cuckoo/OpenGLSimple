@@ -3,8 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="gl20/src/main/res/layout/activity_main.xml" value="0.13949275362318841" />
+        <entry key="gl20/src/main/res/layout/activity_triangle.xml" value="0.13949275362318841" />
+        <entry key="gl20/src/main/res/layout/fragment_main.xml" value="0.13949275362318841" />
+        <entry key="gl30/src/main/res/layout/activity_main.xml" value="0.13949275362318841" />
+        <entry key="gl30/src/main/res/layout/fragment_main.xml" value="0.13949275362318841" />
         <entry key="opengl20/src/main/res/layout/activity_main.xml" value="0.1962962962962963" />
         <entry key="opengl20/src/main/res/layout/fragment_main.xml" value="0.215625" />
+        <entry key="opengl20/src/main/res/layout/fragment_main_cpp.xml" value="0.2717391304347826" />
+        <entry key="opengl20/src/main/res/layout/fragment_main_kt.xml" value="0.2717391304347826" />
       </map>
     </option>
   </component>

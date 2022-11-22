@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "OpenGLSimple"
-include ':opengl20'
-include ':opengl30'
+include ':demo'
+include ':gl20'
+include ':gl30'
+include ':glutils'
