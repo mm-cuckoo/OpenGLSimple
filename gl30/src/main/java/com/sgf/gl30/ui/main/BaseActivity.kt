@@ -1,4 +1,4 @@
-package com.sgf.gl20.ui.activity
+package com.sgf.gl30.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -1,9 +1,10 @@
-package com.sgf.gl20.ui.activity
+package com.sgf.gl30.ui.activity.cpp
 
 import android.os.Bundle
-import com.sgf.gl20.databinding.ActivityTriangleBinding
+import com.sgf.gl30.databinding.ActivityTriangleBinding
+import com.sgf.gl30.ui.main.BaseActivity
 
-class TriangleActivity : BaseActivity() {
+class CppTriangleActivity : BaseActivity() {
 
     private lateinit var binding: ActivityTriangleBinding
 
