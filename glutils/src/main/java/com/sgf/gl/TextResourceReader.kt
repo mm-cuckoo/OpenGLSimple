@@ -1,7 +1,6 @@
-package com.sgf.gl20.utils
+package com.sgf.gl
 
 import android.content.Context
-import com.sgf.gl20.GLog
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream

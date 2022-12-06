@@ -1,7 +1,6 @@
-package com.sgf.gl20.utils
+package com.sgf.gl
 
 import android.opengl.GLES20
-import com.sgf.gl20.GLog
 
 object ShaderHelper {
     fun compileVertexShader(shaderCode: String): Int {
