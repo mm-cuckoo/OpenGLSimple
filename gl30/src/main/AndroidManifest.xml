@@ -5,11 +5,7 @@
     <application>
 
         <activity
-            android:name=".ui.activity.kt.KtTriangleActivity"
-            />
-
-        <activity
-            android:name=".ui.activity.cpp.CppTriangleActivity"
+            android:name=".ui.activity.TriangleActivity"
             />
         <activity
             android:name=".ui.main.GL30MainActivity">

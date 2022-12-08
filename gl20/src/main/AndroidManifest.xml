@@ -4,12 +4,10 @@
 
     <application>
         <activity
-            android:name=".ui.activity.kt.KtTriangleActivity"
+            android:name=".ui.activity.TriangleActivity"
             />
 
-        <activity
-            android:name=".ui.activity.cpp.CppTriangleActivity"
-            />
+
         <activity
             android:name=".ui.main.GL20MainActivity"
             >

@@ -11,6 +11,7 @@
         <entry key="gl30/src/main/res/layout/activity_gl30_main.xml" value="0.1" />
         <entry key="gl30/src/main/res/layout/activity_main.xml" value="0.13949275362318841" />
         <entry key="gl30/src/main/res/layout/activity_triangle.xml" value="0.21510416666666668" />
+        <entry key="gl30/src/main/res/layout/activity_triangle_cpp.xml" value="0.11666666666666667" />
         <entry key="gl30/src/main/res/layout/fragment_main.xml" value="0.13949275362318841" />
         <entry key="opengl20/src/main/res/layout/activity_main.xml" value="0.1962962962962963" />
         <entry key="opengl20/src/main/res/layout/fragment_main.xml" value="0.215625" />

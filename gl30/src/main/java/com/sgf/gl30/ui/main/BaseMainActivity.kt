@@ -2,8 +2,10 @@ package com.sgf.gl30.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.view.size
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseMainActivity<T : ViewBinding> : BaseActivity() {
@@ -14,27 +16,16 @@ abstract class BaseMainActivity<T : ViewBinding> : BaseActivity() {
         binding = getBinding()
         setContentView(binding.root)
 
-        val ktViewGroup = getKtLayout()
-        val ktMap = getKtMap()
-        ktMap.forEach { (t, u) ->
+        val buttonGroup = getButtonLayout()
+        val buttonMap = getButtonMap()
+        buttonMap.forEach { (t, u) ->
             val button = Button(this)
             button.setOnClickListener {
                 val intent = Intent(this, u)
                 startActivity(intent)
             }
             button.text = t
-            ktViewGroup.addView(button)
-        }
-        val cppViewGroup = getCppLayout()
-        val cppMap = getCppMap()
-        cppMap.forEach { (t, u) ->
-            val button = Button(this)
-            button.setOnClickListener {
-                val intent = Intent(this, u)
-                startActivity(intent)
-            }
-            button.text = t
-            cppViewGroup.addView(button)
+            addButtonToView(buttonGroup, button)
         }
     }
 
@@ -42,14 +33,16 @@ abstract class BaseMainActivity<T : ViewBinding> : BaseActivity() {
         return binding
     }
 
+    open fun addButtonToView(viewGroup : ViewGroup, button : Button) {
+        viewGroup.addView(button)
+    }
+
     abstract fun getBinding() : T
 
-    abstract fun getKtLayout() : ViewGroup
+    abstract fun getButtonLayout() : ViewGroup
 
-    abstract fun getCppLayout() : ViewGroup
+    abstract fun getButtonMap() : Map<String, Class<*>>
 
-    abstract fun getKtMap() : Map<String, Class<*>>
 
-    abstract fun getCppMap() : Map<String, Class<*>>
 
 }

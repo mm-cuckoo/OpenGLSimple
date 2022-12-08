@@ -7,30 +7,11 @@
     tools:context=".ui.main.GL30MainActivity">
 
     <LinearLayout
+        android:id="@+id/btnLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/left_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" />
-
-        <LinearLayout
-            android:id="@+id/right_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+        android:orientation="vertical"/>
 
 </ScrollView>

@@ -8,8 +8,19 @@ cmake_minimum_required(VERSION 3.18.1)
 
 # Declares and names the project.
 
-project("gl30")
+#project("gl30")
 
+# 设置包含目录
+include_directories(
+        utils
+        jni
+)
+
+#设置cpp 文件
+file(GLOB src-files
+        ${CMAKE_SOURCE_DIR}/*.cpp
+        ${CMAKE_SOURCE_DIR}/jni/*.cpp
+        ${CMAKE_SOURCE_DIR}/utils/*.cpp)
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -22,7 +33,8 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-            gl30.cpp)
+            ${src-files}
+        )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -41,9 +53,15 @@ find_library( # Sets the name of the path variable.
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
-target_link_libraries( # Specifies the target library.
-                       gl30
+target_link_libraries(
+        # Specifies the target library.
+        gl30
+        #添加 Android native lib
+        android
+        # 添加 EGL GLESv3
+        EGL
+        GLESv3
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       ${log-lib} )
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib} )
