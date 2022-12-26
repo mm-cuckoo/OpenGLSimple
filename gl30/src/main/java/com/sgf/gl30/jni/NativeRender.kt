@@ -5,6 +5,11 @@ class NativeRender {
         System.loadLibrary("gl30")
     }
 
-    external fun native_Init()
     external fun native_Test() : String
+
+    external fun native_OnInit()
+    external fun native_OnUnInit()
+    external fun native_OnSurfaceCreated()
+    external fun native_OnSurfaceChanged(width: Int, height: Int)
+    external fun native_OnDrawFrame()
 }

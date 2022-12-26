@@ -12,6 +12,8 @@ cmake_minimum_required(VERSION 3.18.1)
 
 # 设置包含目录
 include_directories(
+        render
+        sample
         utils
         jni
 )
@@ -20,6 +22,8 @@ include_directories(
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/*.cpp
         ${CMAKE_SOURCE_DIR}/jni/*.cpp
+        ${CMAKE_SOURCE_DIR}/sample/*.cpp
+        ${CMAKE_SOURCE_DIR}/render/*.cpp
         ${CMAKE_SOURCE_DIR}/utils/*.cpp)
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.

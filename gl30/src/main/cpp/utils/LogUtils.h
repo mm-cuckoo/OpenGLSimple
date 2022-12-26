@@ -1,14 +1,10 @@
-//
-// Created by machao on 2022/12/8.
-//
-
 #ifndef OPENGLSIMPLE_LOGUTILS_H
 #define OPENGLSIMPLE_LOGUTILS_H
 
 #include <android/log.h>
 #include <sys/time.h>
 
-#define  LOG_TAG "SGF"
+#define  LOG_TAG "SGF-Native"
 
 #define  LOGCATE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 #define  LOGCATV(...)  __android_log_print(ANDROID_LOG_VERBOSE,LOG_TAG,__VA_ARGS__)

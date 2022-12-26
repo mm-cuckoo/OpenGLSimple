@@ -1,9 +1,7 @@
-//
-// Created by machao on 2022/12/7.
-//
 #include <jni.h>
 #include <string>
 #include "LogUtils.h"
+#include "MyGLRenderContext.h"
 
 #define NATIVE_RENDER_CLASS_NAME "com/sgf/gl30/jni/NativeRender"
 #define NATIVE_BG_RENDER_CLASS_NAME "com/sgf/gl30/jni/NativeEglRender"
@@ -18,18 +16,37 @@ JNIEXPORT jstring JNICALL native_Test(JNIEnv *env, jobject jobj) {
 }
 
 
-JNIEXPORT void JNICALL native_Init(JNIEnv *env, jobject jobj) {
-
+JNIEXPORT void JNICALL native_OnInit(JNIEnv *env, jobject jobj) {
+    MyGLRenderContext::GetInstance();
 }
 
+JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env , jobject jobj) {
+    MyGLRenderContext::DestroyInstance();
+}
+
+JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject jobj) {
+    MyGLRenderContext::GetInstance()->OnSurfaceCreated();
+}
+
+JNIEXPORT void JNICALL native_OnSurfaceChanged(JNIEnv *env, jobject jobj, jint width, jint height) {
+    MyGLRenderContext::GetInstance()->OnSurfaceChanged(width, height);
+}
+
+JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject jobj) {
+    MyGLRenderContext::GetInstance()->OnDrawFrame();
+}
 
 #ifdef __cplusplus
 }
 #endif
 
 static JNINativeMethod gl_RenderMethods[] = {
-        {"native_Test", "()Ljava/lang/String;", (void *) (native_Test)},
-        {"native_Init", "()V", (void *) (native_Init)}
+        {"native_Test",                 "()Ljava/lang/String;",     (void *) (native_Test)},
+        {"native_OnInit",               "()V",                      (void *) (native_OnInit)},
+        {"native_OnUnInit",             "()V",                      (void *) (native_OnUnInit)},
+        {"native_OnSurfaceCreated",     "()V",                      (void *) (native_OnSurfaceCreated)},
+        {"native_OnSurfaceChanged",     "(II)V",                    (void *) (native_OnSurfaceChanged)},
+        {"native_OnDrawFrame",          "()V",                      (void *) (native_OnDrawFrame)}
 };
 
 static JNINativeMethod gl_BgRenderMethods[] = {

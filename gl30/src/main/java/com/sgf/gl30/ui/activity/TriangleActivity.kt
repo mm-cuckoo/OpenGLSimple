@@ -15,5 +15,11 @@ class TriangleActivity : BaseActivity() {
         setContentView(binding.root)
         val cppGLHandler = NativeRender()
         binding.textNdk.text = cppGLHandler.native_Test()
+        binding.myGlSurfaceView.initRender()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding.myGlSurfaceView.unInitRender()
     }
 }
