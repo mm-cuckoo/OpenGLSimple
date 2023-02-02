@@ -5,29 +5,30 @@ GLuint GLUtils::LoadShader(GLenum shaderType, const char *pSource)
 {
     GLuint shader = 0;
     FUN_BEGIN_TIME("GLUtils::LoadShader")
-    shader = glCreateShader(shaderType);
+    shader = glCreateShader(shaderType); // 创建一个着色器， 如果大于0 则成功
     if (shader)
     {
-        glShaderSource(shader, 1, &pSource, NULL);
-        glCompileShader(shader);
+        glShaderSource(shader, 1, &pSource, NULL); // 添加pSource  GL程序代码
+        glCompileShader(shader); // 编译GL着色器
         GLint compiledCode = 0;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &compiledCode);
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &compiledCode); // 获取编译状态code
 
+        // 如果code 不为 0 则表示编译时出现问题， 需要进一步获取编译错误信息
         if (!compiledCode)
         {
             GLint infoLen = 0;
-            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLen);// 获取着色器信息长度
             if (infoLen)
             {
-                char *buffer = (char *)malloc((size_t)infoLen);
+                char *buffer = (char *)malloc((size_t)infoLen); // 开辟空间
                 if (buffer)
                 {
-                    glGetShaderInfoLog(shader, infoLen, NULL, buffer);
+                    glGetShaderInfoLog(shader, infoLen, NULL, buffer); // 获取错误信息
                     LOGCATE("GLUtils::LoadShader Could not compile shader %d:\n%s\n", shaderType, buffer);
-                    free(buffer);
+                    free(buffer); // 释放空间
                 }
 
-                glDeleteShader(shader);
+                glDeleteShader(shader);// 删除编译的着色器
                 shader = 0;
             }
 
@@ -53,9 +54,9 @@ GLuint GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFrag
         program = glCreateProgram();
         if (program) {
             glAttachShader(program, vertexShaderHandler);
-            CheckGLError("glAttachShader");
+            CheckGLError("glAttachShader-v");
             glAttachShader(program, fragShaderHandler);
-            CheckGLError("glAttachShader");
+            CheckGLError("glAttachShader-f");
 
             glLinkProgram(program);
             GLint linkStatus = GL_FALSE;

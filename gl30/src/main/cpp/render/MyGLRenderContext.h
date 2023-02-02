@@ -15,6 +15,7 @@ public:
     void OnSurfaceCreated();
     void OnSurfaceChanged(int width, int height);
     void OnDrawFrame();
+    void OnChangeColor();
 
     void SetRenderType(int type);
 

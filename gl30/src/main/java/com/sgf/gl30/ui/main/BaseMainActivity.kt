@@ -8,13 +8,10 @@ import android.widget.Button
 import androidx.core.view.size
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseMainActivity<T : ViewBinding> : BaseActivity() {
-    private lateinit var binding: T
+abstract class BaseMainActivity<T : ViewBinding> : BaseActivity<T>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = getBinding()
-        setContentView(binding.root)
 
         val buttonGroup = getButtonLayout()
         val buttonMap = getButtonMap()
@@ -29,15 +26,9 @@ abstract class BaseMainActivity<T : ViewBinding> : BaseActivity() {
         }
     }
 
-    fun getRootView() : T {
-        return binding
-    }
-
     open fun addButtonToView(viewGroup : ViewGroup, button : Button) {
         viewGroup.addView(button)
     }
-
-    abstract fun getBinding() : T
 
     abstract fun getButtonLayout() : ViewGroup
 

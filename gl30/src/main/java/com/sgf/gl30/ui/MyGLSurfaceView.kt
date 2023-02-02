@@ -35,6 +35,10 @@ class MyGLSurfaceView : GLSurfaceView {
         nativeRender.native_OnInit()
     }
 
+    fun changeColor() {
+        nativeRender.native_OnChangeColor()
+    }
+
     fun unInitRender() {
         nativeRender.native_OnUnInit()
     }

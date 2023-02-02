@@ -6,12 +6,12 @@ import com.sgf.gl30.databinding.ActivityGl30MainBinding
 
 class GL30MainActivity : BaseMainActivity<ActivityGl30MainBinding>() {
 
-    override fun getBinding(): ActivityGl30MainBinding {
+    override fun createRootView(): ActivityGl30MainBinding {
         return ActivityGl30MainBinding.inflate(layoutInflater)
     }
 
     override fun getButtonLayout(): ViewGroup {
-        return getRootView().btnLayout
+        return binding!!.btnLayout
     }
 
     override fun getButtonMap(): Map<String, Class<*>> {

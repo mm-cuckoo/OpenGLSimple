@@ -24,6 +24,10 @@ JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env , jobject jobj) {
     MyGLRenderContext::DestroyInstance();
 }
 
+JNIEXPORT void JNICALL native_OnChangeColor(JNIEnv *env , jobject jobj) {
+    MyGLRenderContext::GetInstance()->OnChangeColor();
+}
+
 JNIEXPORT void JNICALL native_OnSurfaceCreated(JNIEnv *env, jobject jobj) {
     MyGLRenderContext::GetInstance()->OnSurfaceCreated();
 }
@@ -44,6 +48,7 @@ static JNINativeMethod gl_RenderMethods[] = {
         {"native_Test",                 "()Ljava/lang/String;",     (void *) (native_Test)},
         {"native_OnInit",               "()V",                      (void *) (native_OnInit)},
         {"native_OnUnInit",             "()V",                      (void *) (native_OnUnInit)},
+        {"native_OnChangeColor",             "()V",                 (void *) (native_OnChangeColor)},
         {"native_OnSurfaceCreated",     "()V",                      (void *) (native_OnSurfaceCreated)},
         {"native_OnSurfaceChanged",     "(II)V",                    (void *) (native_OnSurfaceChanged)},
         {"native_OnDrawFrame",          "()V",                      (void *) (native_OnDrawFrame)}
@@ -54,7 +59,7 @@ static JNINativeMethod gl_BgRenderMethods[] = {
 
 static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *methods, int methodNum)
 {
-    LOGCATE("RegisterNativeMethods");
+    LOGCATI("RegisterNativeMethods");
     jclass clazz = env->FindClass(className);
     if (clazz == nullptr)
     {
@@ -71,25 +76,22 @@ static int RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMe
 
 static void UnregisterNativeMethods(JNIEnv *env, const char *className)
 {
-    LOGCATE("UnregisterNativeMethods");
+    LOGCATI("UnregisterNativeMethods");
     jclass clazz = env->FindClass(className);
     if (clazz == nullptr)
     {
         LOGCATE("UnregisterNativeMethods fail. clazz == NULL");
         return;
     }
-    if (env != nullptr)
-    {
-        env->UnregisterNatives(clazz);
-    }
+    env->UnregisterNatives(clazz);
 }
 
 // call this func when loading lib
 extern "C" jint JNI_OnLoad(JavaVM *jvm, void *p)
 {
-    LOGCATE("===== JNI_OnLoad =====");
+    LOGCATI("===== JNI_OnLoad =====");
     jint jniRet = JNI_ERR;
-    JNIEnv *env = NULL;
+    JNIEnv *env = nullptr;
     if (jvm->GetEnv((void **) (&env), JNI_VERSION_1_6) != JNI_OK)
     {
         return jniRet;
@@ -116,7 +118,7 @@ extern "C" jint JNI_OnLoad(JavaVM *jvm, void *p)
 
 extern "C" void JNI_OnUnload(JavaVM *jvm, void *p)
 {
-    JNIEnv *env = NULL;
+    JNIEnv *env = nullptr;
     if (jvm->GetEnv((void **) (&env), JNI_VERSION_1_6) != JNI_OK)
     {
         return;

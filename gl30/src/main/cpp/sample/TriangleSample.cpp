@@ -3,6 +3,15 @@
 
 TriangleSample::TriangleSample() {
 
+    float color[] = {
+            1.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+    };
+
+    auto *colorBuffer = (float *)malloc(sizeof(float) * 12 );
+    memcpy(colorBuffer, color, sizeof(float) * 12);
+    mp_colorArray = colorBuffer;
 }
 
 TriangleSample::~TriangleSample() {
@@ -15,21 +24,40 @@ void TriangleSample::Init() {
         return;
     }
 
+    /**
+     * 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
+     * 第二行表示：输入一个名为vPosition的4分量向量，layout (location = 0)表示这个变量的位置是顶点属性0。
+     * 第三行表示：输入一个名为aColor的4分量向量，layout (location = 1)表示这个变量的位置是顶点属性1。
+     * 第四行表示：输出一个名为vColor的4分量向量
+     * 第七行表示：将输入数据aColor拷贝到vColor的变量中。
+     */
     char vShaderStr[] =
             "#version 300 es                          \n"
             "layout(location = 0) in vec4 vPosition;  \n"
+            "layout(location = 1) in vec4 aColor;     \n"
+            "out vec4 vColor;                         \n"
             "void main()                              \n"
             "{                                        \n"
             "   gl_Position = vPosition;              \n"
+            "   vColor = aColor;                      \n"
             "}                                        \n";
 
+    /**
+     * 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
+     * 第二行表示：声明着色器中浮点变量的默认精度。
+     * 第三行表示: 声明一个输入名为vColor的4分向量
+     * 第四行表示：着色器声明一个输出变量fragColor，这个是一个4分量的向量。
+     * 第六行表示：表示将输入的颜色值数据拷贝到fragColor变量中，输出到颜色缓冲区。
+     */
     char fShaderStr[] =
             "#version 300 es                              \n"
             "precision mediump float;                     \n"
+            "in vec4 vColor;                              \n"
             "out vec4 fragColor;                          \n"
             "void main()                                  \n"
             "{                                            \n"
-            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
+            "   fragColor = vColor;                       \n"
+            //            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
             "}                                            \n";
 
 
@@ -56,14 +84,14 @@ void TriangleSample::Draw(int screenW, int screenH) {
  *               |
  * */
 
-//设置三角形顶点坐标
+//设置三角形顶点坐标（x, y, z）
     GLfloat vVertices[] = {
              0.0f,  0.5f, 0.0f,
             -0.5f, -0.5f, 0.0f,
              0.5f, -0.5f, 0.0f,
     };
 
-    if(m_ProgramObj == 0)
+    if(m_ProgramObj == GL_NONE)
         return;
     // 清除buffer
     glClear(GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -86,8 +114,16 @@ void TriangleSample::Draw(int screenW, int screenH) {
     // 允许顶点着色器读取GPU 的数据
     glEnableVertexAttribArray (0);
 
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, mp_colorArray);
+
     // 绘制
     glDrawArrays (GL_TRIANGLES, 0, 3);
+
+    // 禁止顶点数组句柄
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
     glUseProgram (GL_NONE);
 }
 
@@ -98,4 +134,21 @@ void TriangleSample::Destroy() {
         glDeleteProgram(m_ProgramObj);
         m_ProgramObj = GL_NONE;
     }
+    if (mp_colorArray) {
+        free(mp_colorArray);
+        mp_colorArray = nullptr;
+    }
+}
+
+void TriangleSample::changeColor() {
+    if (mp_colorArray) {
+        float color[] = {
+                0.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 0.0f, 1.0f,
+                0.0f, 0.0f, 1.0f, 1.0f
+        };
+
+        memcpy(mp_colorArray, color, sizeof(float) * 12);
+    }
+
 }

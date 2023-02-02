@@ -26,8 +26,9 @@ public:
 
 
     virtual void Init() = 0;
+    virtual void changeColor() = 0;
     virtual void Draw(int screenW, int screenH) = 0;
-    virtual void  Destroy() = 0;
+    virtual void Destroy() = 0;
 
 protected:
     GLuint m_ProgramObj;

@@ -6,6 +6,12 @@
 
 class GLUtils {
 public:
+    /**
+     * 加载着色器， 在GL 中有两种着色器， 顶点着色器(GL_VERTEX_SHADER)和片源着色器(GL_FRAGMENT_SHADER)
+     * @param shaderType : 顶点着色器(GL_VERTEX_SHADER)和片源着色器(GL_FRAGMENT_SHADER)
+     * @param pSource : GL 程序
+     * @return
+     */
     static GLuint LoadShader(GLenum shaderType, const char *pSource);
 
     static GLuint CreateProgram(

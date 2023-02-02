@@ -65,3 +65,7 @@ void MyGLRenderContext::SetRenderType(int type) {
 
     }
 }
+
+void MyGLRenderContext::OnChangeColor() {
+    m_pSample->changeColor();
+}
