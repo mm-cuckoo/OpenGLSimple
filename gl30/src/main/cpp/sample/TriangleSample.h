@@ -11,7 +11,7 @@ public:
     TriangleSample();
     virtual ~TriangleSample();
 
-    virtual void changeColor();
+    virtual void ChangeColor();
     virtual void Init();
     virtual void Draw(int screenW, int screenH);
     virtual void Destroy();

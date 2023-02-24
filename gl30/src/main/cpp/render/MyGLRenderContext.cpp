@@ -11,11 +11,7 @@ MyGLRenderContext::MyGLRenderContext() {
 
 MyGLRenderContext::~MyGLRenderContext() {
     LOGCATI("~MyGLRenderContext");
-    if (m_pSample) {
-        m_pSample->Destroy();
-        delete m_pSample;
-        m_pSample = nullptr;
-    }
+    ReleaseRender();
 }
 
 void MyGLRenderContext::OnSurfaceCreated() {
@@ -56,10 +52,14 @@ void MyGLRenderContext::DestroyInstance() {
 }
 
 void MyGLRenderContext::SetRenderType(int type) {
+    ReleaseRender();
     switch (type)
     {
         case SAMPLE_TYPE_KEY_TRIANGLE:
             m_pSample = new TriangleSample();
+            break;
+        case SAMPLE_TYPE_KEY_TEXTURE_MAP:
+            m_pSample = new TextureMapSample();
             break;
         default: ;
 
@@ -67,5 +67,41 @@ void MyGLRenderContext::SetRenderType(int type) {
 }
 
 void MyGLRenderContext::OnChangeColor() {
-    m_pSample->changeColor();
+    m_pSample->ChangeColor();
+}
+
+void MyGLRenderContext::SetImageData(int format, int width, int height, uint8_t *pData) {
+
+    LOGCATI("GL Render Context : Image Data : format=%d, width=%d, height=%d , pData=%p", format, width, height, pData);
+    NativeImage nativeImage;
+    nativeImage.format = format;
+    nativeImage.width = width;
+    nativeImage.height = height;
+    nativeImage.ppPlane[0] = pData;
+    switch (format) {
+        case IMAGE_FORMAT_NV12:
+        case IMAGE_FORMAT_NV21:
+            // 数组指针偏移
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width *  height;
+            break;
+        case IMAGE_FORMAT_I420:
+            nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width * height;
+            nativeImage.ppPlane[2] = nativeImage.ppPlane[1] + width * height / 4;
+            break;
+        default:
+            break;
+    }
+
+    if (m_pSample) {
+        m_pSample->LoadImage(&nativeImage);
+    }
+}
+
+void MyGLRenderContext::ReleaseRender() {
+    LOGCATI("ReleaseRender ===>");
+    if (m_pSample) {
+        m_pSample->Destroy();
+        delete m_pSample;
+        m_pSample = nullptr;
+    }
 }

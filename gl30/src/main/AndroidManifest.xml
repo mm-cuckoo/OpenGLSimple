@@ -10,6 +10,10 @@
         <activity
             android:name=".ui.main.GL30MainActivity">
         </activity>
+
+        <activity
+            android:name=".ui.activity.TextureActivity">
+        </activity>
     </application>
 
 </manifest>

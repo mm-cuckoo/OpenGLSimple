@@ -11,6 +11,7 @@ class TriangleActivity : BaseActivity<ActivityGl30TriangleBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding?.myGlSurfaceView?.initRender()
+        binding?.myGlSurfaceView?.setRenderType(NativeRender.SAMPLE_TYPE_TRIANGLE)
 
         binding?.btnChangeColor?.setOnClickListener {
             binding?.myGlSurfaceView?.changeColor()

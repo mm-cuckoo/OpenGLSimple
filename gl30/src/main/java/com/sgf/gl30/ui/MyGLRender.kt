@@ -19,7 +19,7 @@ class MyGLRender(private val nativeRender: NativeRender) : GLSurfaceView.Rendere
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        GLog.d("onDrawFrame gl:$gl")
+//        GLog.d("onDrawFrame gl:$gl")
         nativeRender.native_OnDrawFrame()
     }
 }

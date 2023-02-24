@@ -15,6 +15,15 @@ class MyGLSurfaceView : GLSurfaceView {
         init()
     }
 
+    companion object {
+        const val IMAGE_FORMAT_RGBA = 0x01
+        const val IMAGE_FORMAT_NV21 = 0x02
+        const val IMAGE_FORMAT_NV12 = 0x03
+        const val IMAGE_FORMAT_I420 = 0x04
+        const val IMAGE_FORMAT_YUYV = 0x05
+        const val IMAGE_FORMAT_GARY = 0x06
+    }
+
     private val nativeRender = NativeRender()
     private val render = MyGLRender(nativeRender)
 
@@ -29,6 +38,14 @@ class MyGLSurfaceView : GLSurfaceView {
          */
         renderMode = RENDERMODE_CONTINUOUSLY // RENDERMODE_WHEN_DIRTY
         GLog.d("init end ===>")
+    }
+
+    fun setRenderType(type : Int) {
+        nativeRender.native_SetRenderType(type)
+    }
+
+    fun setImageData(format:Int, width: Int, height :Int, imageData: ByteArray) {
+        nativeRender.native_SetImageData(format, width, height, imageData)
     }
 
     fun initRender() {
