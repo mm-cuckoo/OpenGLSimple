@@ -1,21 +1,8 @@
-//
-// Created by machao on 2023/2/22.
-//
-
 #include "TextureMapSample.h"
 #include "GLUtils.h"
 
-TextureMapSample::TextureMapSample() {
-    m_TextureId = GL_NONE;
-}
-
-TextureMapSample::~TextureMapSample() {
-    NativeImageUtil::FreeNativeImage(&m_RenderImage);
-}
-
-void TextureMapSample::Init() {
-
-    char vShaderStr[] =
+/**
+     char vShaderStr[] =
             "#version 300 es                            \n"
             "layout(location = 0) in vec4 a_position;   \n"
             "layout(location = 1) in vec2 a_texCoord;   \n"
@@ -38,6 +25,21 @@ void TextureMapSample::Init() {
             "}                                                   \n";
 
 
+
+ */
+
+TextureMapSample::TextureMapSample(const char *pVShader, const char *pFShader) {
+    m_TextureId = GL_NONE;
+    this->pVShader = pVShader;
+    this->pFShader = pFShader;
+}
+
+TextureMapSample::~TextureMapSample() {
+    NativeImageUtil::FreeNativeImage(&m_RenderImage);
+}
+
+void TextureMapSample::Init() {
+
     // 生成一个纹理，将纹理 id 赋值给 m_TextureId
     glGenTextures(1, &m_TextureId);
     // 将纹理 m_TextureId 绑定到类型 GL_TEXTURE_2D 纹理
@@ -53,7 +55,7 @@ void TextureMapSample::Init() {
     // 解除纹理关联
     glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
-    m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr, m_VertexShader, m_FragmentShader);
+    m_ProgramObj = GLUtils::CreateProgram(pVShader, pFShader, m_VertexShader, m_FragmentShader);
     if (m_ProgramObj) {
         // 获取片源 s_TextureMap 的句柄
         LOGCATD("gl program create success ");

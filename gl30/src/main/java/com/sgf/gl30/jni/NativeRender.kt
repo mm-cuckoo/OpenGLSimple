@@ -19,6 +19,8 @@ class NativeRender {
 
     external fun native_SetRenderType(type : Int)
 
+    external fun native_SetRenderTypeAndShader(type: Int, vShaderStr: String, fShaderStr: String)
+
     external fun native_SetImageData(format : Int, width: Int, height: Int, bytes : ByteArray)
 
     external fun native_OnChangeColor()

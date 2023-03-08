@@ -24,10 +24,21 @@ JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env , jobject instance) {
     MyGLRenderContext::DestroyInstance();
 }
 
+JNIEXPORT void JNICALL native_SetRenderTypeAndShader(JNIEnv *env, jobject instance, jint type, jstring vShaderStr, jstring fShadertSr) {
+    const char * pVShader = env->GetStringUTFChars(vShaderStr, nullptr);
+    const int pVShaderStrLen = env->GetStringUTFLength(vShaderStr);
+    char * pvs = new char [pVShaderStrLen];
+    strcpy(pvs, pVShader);
 
-JNIEXPORT void JNICALL native_SetRenderType(JNIEnv *env, jobject instance, jint type) {
-    MyGLRenderContext::GetInstance()->SetRenderType(type);
+    const char * pFShader = env->GetStringUTFChars(fShadertSr, nullptr);
+    const int pFShaderStrLen = env->GetStringUTFLength(fShadertSr);
+    char * pfs = new char [pFShaderStrLen];
+    strcpy(pfs, pFShader);
+    MyGLRenderContext::GetInstance()->SetRenderType(type, pvs, pfs);
+    env->ReleaseStringUTFChars(vShaderStr, pVShader);
+    env->ReleaseStringUTFChars(fShadertSr, pFShader);
 }
+
 
 
 JNIEXPORT void JNICALL native_SetImageData(JNIEnv *env, jobject instance, jint format,jint width, jint height , jbyteArray imageData) {
@@ -68,15 +79,15 @@ JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instance) {
 #endif
 
 static JNINativeMethod gl_RenderMethods[] = {
-        {"native_Test",                 "()Ljava/lang/String;",     (void *) (native_Test)},
-        {"native_OnInit",               "()V",                      (void *) (native_OnInit)},
-        {"native_OnUnInit",             "()V",                      (void *) (native_OnUnInit)},
-        {"native_SetRenderType",        "(I)V",                     (void *) (native_SetRenderType)},
-        {"native_SetImageData",        "(III[B)V",                  (void *) (native_SetImageData)},
-        {"native_OnChangeColor",        "()V",                      (void *) (native_OnChangeColor)},
-        {"native_OnSurfaceCreated",     "()V",                      (void *) (native_OnSurfaceCreated)},
-        {"native_OnSurfaceChanged",     "(II)V",                    (void *) (native_OnSurfaceChanged)},
-        {"native_OnDrawFrame",          "()V",                      (void *) (native_OnDrawFrame)}
+        {"native_Test",                     "()Ljava/lang/String;",                         (void *) (native_Test)},
+        {"native_OnInit",                   "()V",                                          (void *) (native_OnInit)},
+        {"native_OnUnInit",                 "()V",                                          (void *) (native_OnUnInit)},
+        {"native_SetRenderTypeAndShader",   "(ILjava/lang/String;Ljava/lang/String;)V",     (void *) (native_SetRenderTypeAndShader)},
+        {"native_SetImageData",             "(III[B)V",                                     (void *) (native_SetImageData)},
+        {"native_OnChangeColor",            "()V",                                          (void *) (native_OnChangeColor)},
+        {"native_OnSurfaceCreated",         "()V",                                          (void *) (native_OnSurfaceCreated)},
+        {"native_OnSurfaceChanged",         "(II)V",                                        (void *) (native_OnSurfaceChanged)},
+        {"native_OnDrawFrame",              "()V",                                          (void *) (native_OnDrawFrame)}
 };
 
 static JNINativeMethod gl_BgRenderMethods[] = {

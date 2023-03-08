@@ -1,17 +1,51 @@
 #include "TriangleSample.h"
 #include "GLUtils.h"
 
-TriangleSample::TriangleSample() {
+/**
+/**
+ * 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
+ * 第二行表示：输入一个名为vPosition的4分量向量，layout (location = 0)表示这个变量的位置是顶点属性0。
+ * 第三行表示：输入一个名为aColor的4分量向量，layout (location = 1)表示这个变量的位置是顶点属性1。
+ * 第四行表示：输出一个名为vColor的4分量向量
+ * 第七行表示：将输入数据aColor拷贝到vColor的变量中。
+ */
+/**
+char vShaderStr[] =
+      "#version 300 es                          \n"
+      "layout(location = 0) in vec4 vPosition;  \n"
+      "layout(location = 1) in vec4 aColor;     \n"
+      "out vec4 vColor;                         \n"
+      "void main()                              \n"
+      "{                                        \n"
+      "   gl_Position = vPosition;              \n"
+      "   vColor = aColor;                      \n"
+      "}                                        \n";
 
-    float color[] = {
-            1.0f, 0.0f, 0.0f, 1.0f,
-            1.0f, 0.0f, 0.0f, 1.0f,
-            1.0f, 0.0f, 0.0f, 1.0f,
-    };
-
-    auto *colorBuffer = (float *)malloc(sizeof(float) * 12 );
-    memcpy(colorBuffer, color, sizeof(float) * 12);
-    mp_colorArray = colorBuffer;
+*/
+ /**
+* 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
+* 第二行表示：声明着色器中浮点变量的默认精度。
+* 第三行表示: 声明一个输入名为vColor的4分向量
+* 第四行表示：着色器声明一个输出变量fragColor，这个是一个4分量的向量。
+* 第七行表示：表示将输入的颜色值数据拷贝到fragColor变量中，输出到颜色缓冲区。
+*/
+ /**
+char fShaderStr[] =
+        "#version 300 es                              \n"
+        "precision mediump float;                     \n"
+        "in vec4 vColor;                              \n"
+        "out vec4 fragColor;                          \n"
+        "void main()                                  \n"
+        "{                                            \n"
+        "   fragColor = vColor;                       \n"
+        "}                                            \n";
+*/
+TriangleSample::TriangleSample(const char *pVShader, const char *pFShader) {
+    LOGCATI("vShader: %s", pVShader);
+    LOGCATI("fShader: %s", pFShader);
+    initColor();
+    this->pVShader = pVShader;
+    this->pFShader = pFShader;
 }
 
 TriangleSample::~TriangleSample() {
@@ -24,44 +58,7 @@ void TriangleSample::Init() {
         return;
     }
 
-    /**
-     * 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
-     * 第二行表示：输入一个名为vPosition的4分量向量，layout (location = 0)表示这个变量的位置是顶点属性0。
-     * 第三行表示：输入一个名为aColor的4分量向量，layout (location = 1)表示这个变量的位置是顶点属性1。
-     * 第四行表示：输出一个名为vColor的4分量向量
-     * 第七行表示：将输入数据aColor拷贝到vColor的变量中。
-     */
-    char vShaderStr[] =
-            "#version 300 es                          \n"
-            "layout(location = 0) in vec4 vPosition;  \n"
-            "layout(location = 1) in vec4 aColor;     \n"
-            "out vec4 vColor;                         \n"
-            "void main()                              \n"
-            "{                                        \n"
-            "   gl_Position = vPosition;              \n"
-            "   vColor = aColor;                      \n"
-            "}                                        \n";
-
-    /**
-     * 第一行表示：着色器的版本，OpenGL ES 2.0版本可以不写。
-     * 第二行表示：声明着色器中浮点变量的默认精度。
-     * 第三行表示: 声明一个输入名为vColor的4分向量
-     * 第四行表示：着色器声明一个输出变量fragColor，这个是一个4分量的向量。
-     * 第六行表示：表示将输入的颜色值数据拷贝到fragColor变量中，输出到颜色缓冲区。
-     */
-    char fShaderStr[] =
-            "#version 300 es                              \n"
-            "precision mediump float;                     \n"
-            "in vec4 vColor;                              \n"
-            "out vec4 fragColor;                          \n"
-            "void main()                                  \n"
-            "{                                            \n"
-            "   fragColor = vColor;                       \n"
-            //            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
-            "}                                            \n";
-
-
-    m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr, m_VertexShader, m_FragmentShader);
+    m_ProgramObj = GLUtils::CreateProgram(pVShader, pFShader, m_VertexShader, m_FragmentShader);
 
 }
 
@@ -138,6 +135,16 @@ void TriangleSample::Destroy() {
         free(mp_colorArray);
         mp_colorArray = nullptr;
     }
+
+    if (pVShader) {
+        delete pVShader;
+        pVShader = nullptr;
+    }
+
+    if (pFShader) {
+        delete pFShader;
+        pFShader = nullptr;
+    }
 }
 
 void TriangleSample::ChangeColor() {
@@ -151,4 +158,16 @@ void TriangleSample::ChangeColor() {
         memcpy(mp_colorArray, color, sizeof(float) * 12);
     }
 
+}
+
+void TriangleSample::initColor() {
+    float color[] = {
+            1.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 0.0f, 1.0f,
+    };
+
+    auto *colorBuffer = (float *)malloc(sizeof(float) * 12 );
+    memcpy(colorBuffer, color, sizeof(float) * 12);
+    mp_colorArray = colorBuffer;
 }

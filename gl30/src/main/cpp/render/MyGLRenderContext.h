@@ -21,6 +21,7 @@ public:
     void SetImageData(int format, int width, int height, uint8_t *pData);
 
     void SetRenderType(int type);
+    void SetRenderType(int type, const char *pVShader,const char *pFShader);
 
     void ReleaseRender();
 

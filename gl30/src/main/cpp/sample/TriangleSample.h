@@ -8,13 +8,16 @@
 class TriangleSample : public GLSampleBase {
 
 public:
-    TriangleSample();
+    TriangleSample(const char *pVShader, const char *pFShader);
     virtual ~TriangleSample();
 
     virtual void ChangeColor();
     virtual void Init();
     virtual void Draw(int screenW, int screenH);
     virtual void Destroy();
+
+private:
+    void initColor();
 
 protected:
     float *mp_colorArray = nullptr;

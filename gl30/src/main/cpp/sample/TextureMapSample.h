@@ -1,7 +1,3 @@
-//
-// Created by machao on 2023/2/22.
-//
-
 #ifndef OPENGLSIMPLE_TEXTUREMAPSAMPLE_H
 #define OPENGLSIMPLE_TEXTUREMAPSAMPLE_H
 
@@ -10,7 +6,7 @@
 
 class TextureMapSample : public GLSampleBase {
 public:
-    TextureMapSample();
+    TextureMapSample(const char *pVShader, const char *pFShader);
     virtual ~TextureMapSample();
 
     virtual void Init();

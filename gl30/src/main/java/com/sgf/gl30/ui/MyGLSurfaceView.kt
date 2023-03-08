@@ -44,6 +44,10 @@ class MyGLSurfaceView : GLSurfaceView {
         nativeRender.native_SetRenderType(type)
     }
 
+    fun setRenderType(type: Int, vShaderStr: String, fShaderStr: String) {
+        nativeRender.native_SetRenderTypeAndShader(type, vShaderStr, fShaderStr)
+    }
+
     fun setImageData(format:Int, width: Int, height :Int, imageData: ByteArray) {
         nativeRender.native_SetImageData(format, width, height, imageData)
     }

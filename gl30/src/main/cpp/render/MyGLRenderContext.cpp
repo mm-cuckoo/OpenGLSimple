@@ -6,7 +6,6 @@ MyGLRenderContext * MyGLRenderContext::sm_pGLContext;
 
 MyGLRenderContext::MyGLRenderContext() {
     LOGCATI("MyGLRenderContext");
-    this->SetRenderType(SAMPLE_TYPE_KEY_TRIANGLE);
 }
 
 MyGLRenderContext::~MyGLRenderContext() {
@@ -51,20 +50,21 @@ void MyGLRenderContext::DestroyInstance() {
     }
 }
 
-void MyGLRenderContext::SetRenderType(int type) {
+void MyGLRenderContext::SetRenderType(int type, const char *pVShader,const char *pFShader) {
     ReleaseRender();
     switch (type)
     {
         case SAMPLE_TYPE_KEY_TRIANGLE:
-            m_pSample = new TriangleSample();
+            m_pSample = new TriangleSample(pVShader, pFShader);
             break;
         case SAMPLE_TYPE_KEY_TEXTURE_MAP:
-            m_pSample = new TextureMapSample();
+            m_pSample = new TextureMapSample(pVShader, pFShader);
             break;
         default: ;
 
     }
 }
+
 
 void MyGLRenderContext::OnChangeColor() {
     m_pSample->ChangeColor();

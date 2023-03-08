@@ -2,6 +2,7 @@ package com.sgf.gl30.ui.activity
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import com.sgf.gl.TextResourceReader
 import com.sgf.gl30.R
 import com.sgf.gl30.databinding.ActivityGl30TextureBinding
 import com.sgf.gl30.jni.NativeRender
@@ -16,12 +17,10 @@ class TextureActivity : BaseActivity<ActivityGl30TextureBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding?.myGlSurfaceView?.initRender()
-        binding?.myGlSurfaceView?.setRenderType(NativeRender.SAMPLE_TYPE_TEXTURE_MAP)
+        val vShader = TextResourceReader.readTextFileFromResource(this, R.raw.simple_texture_v_shader)
+        val fShader = TextResourceReader.readTextFileFromResource(this, R.raw.simple_texture_f_shader)
+        binding?.myGlSurfaceView?.setRenderType(NativeRender.SAMPLE_TYPE_TEXTURE_MAP, vShader, fShader)
         loadRGBAImage(R.drawable.lye6)
-        binding?.btnChangeColor?.setOnClickListener {
-            binding?.myGlSurfaceView?.changeColor()
-        }
     }
 
     override fun onDestroy() {

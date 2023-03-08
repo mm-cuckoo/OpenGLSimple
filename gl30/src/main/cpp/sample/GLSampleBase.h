@@ -38,6 +38,9 @@ protected:
     GLuint m_VertexShader;
     GLuint m_FragmentShader;
 
+    const char * pVShader = nullptr;
+    const char * pFShader = nullptr;
+
     int m_SurfaceWidth;
     int m_SurfaceHeight;
 };
