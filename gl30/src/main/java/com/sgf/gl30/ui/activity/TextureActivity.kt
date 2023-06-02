@@ -6,10 +6,8 @@ import com.sgf.gl.TextResourceReader
 import com.sgf.gl30.R
 import com.sgf.gl30.databinding.ActivityGl30TextureBinding
 import com.sgf.gl30.jni.NativeRender
-import com.sgf.gl30.databinding.ActivityGl30TriangleBinding
 import com.sgf.gl30.ui.MyGLSurfaceView.Companion.IMAGE_FORMAT_RGBA
 import com.sgf.gl30.ui.main.BaseActivity
-import java.io.InputStream
 import java.nio.ByteBuffer
 
 class TextureActivity : BaseActivity<ActivityGl30TextureBinding>() {
@@ -21,11 +19,6 @@ class TextureActivity : BaseActivity<ActivityGl30TextureBinding>() {
         val fShader = TextResourceReader.readTextFileFromResource(this, R.raw.simple_texture_f_shader)
         binding?.myGlSurfaceView?.setRenderType(NativeRender.SAMPLE_TYPE_TEXTURE_MAP, vShader, fShader)
         loadRGBAImage(R.drawable.lye6)
-    }
-
-    override fun onDestroy() {
-        binding?.myGlSurfaceView?.unInitRender()
-        super.onDestroy()
     }
 
     override fun createRootView(): ActivityGl30TextureBinding {

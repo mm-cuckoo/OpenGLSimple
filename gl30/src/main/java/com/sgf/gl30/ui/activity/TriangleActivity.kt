@@ -15,16 +15,10 @@ class TriangleActivity : BaseActivity<ActivityGl30TriangleBinding>() {
         val vShader = TextResourceReader.readTextFileFromResource(this, R.raw.simple_triangle_v_shader)
         val fShader = TextResourceReader.readTextFileFromResource(this, R.raw.simple_triangle_f_shader)
         binding?.myGlSurfaceView?.setRenderType(NativeRender.SAMPLE_TYPE_TRIANGLE, vShader, fShader)
-        binding?.myGlSurfaceView?.initRender()
 
         binding?.btnChangeColor?.setOnClickListener {
             binding?.myGlSurfaceView?.changeColor()
         }
-    }
-
-    override fun onDestroy() {
-        binding?.myGlSurfaceView?.unInitRender()
-        super.onDestroy()
     }
 
     override fun createRootView(): ActivityGl30TriangleBinding {

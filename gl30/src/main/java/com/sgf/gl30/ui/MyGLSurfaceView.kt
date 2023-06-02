@@ -40,6 +40,17 @@ class MyGLSurfaceView : GLSurfaceView {
         GLog.d("init end ===>")
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        initRender()
+
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        unInitRender()
+    }
+
     fun setRenderType(type : Int) {
         nativeRender.native_SetRenderType(type)
     }
@@ -52,15 +63,15 @@ class MyGLSurfaceView : GLSurfaceView {
         nativeRender.native_SetImageData(format, width, height, imageData)
     }
 
-    fun initRender() {
-        nativeRender.native_OnInit()
-    }
-
     fun changeColor() {
         nativeRender.native_OnChangeColor()
     }
 
-    fun unInitRender() {
+    private fun initRender() {
+        nativeRender.native_OnInit()
+    }
+
+    private fun unInitRender() {
         nativeRender.native_OnUnInit()
     }
 
