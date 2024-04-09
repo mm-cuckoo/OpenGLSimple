@@ -60,6 +60,10 @@ void MyGLRenderContext::SetRenderType(int type, const char *pVShader,const char 
         case SAMPLE_TYPE_KEY_TEXTURE_MAP:
             m_pSample = new TextureMapSample(pVShader, pFShader);
             break;
+
+        case SAMPLE_TYPE_KEY_YUV_TEXTURE_MAP:
+            m_pSample = new NV21TextureMapSample(pVShader, pFShader);
+            break;
         default: ;
 
     }

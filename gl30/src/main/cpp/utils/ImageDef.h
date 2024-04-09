@@ -45,32 +45,7 @@ public:
     {
         if (pImage == nullptr || pImage->ppPlane[0] == nullptr) return;
 
-        switch (pImage->format) {
-            case IMAGE_FORMAT_RGBA:
-                free(pImage->ppPlane[0]);
-                break;
-
-            case IMAGE_FORMAT_YUYV:
-
-                break;
-
-            case IMAGE_FORMAT_NV21:
-            case IMAGE_FORMAT_NV12:
-                break;
-
-            case IMAGE_FORMAT_I420:
-                break;
-            case IMAGE_FORMAT_GRAY:
-                break;
-            case IMAGE_FORMAT_I444:
-                break;
-            case IMAGE_FORMAT_P010:
-                break;
-            default:
-                LOGCATE("FreeNativeImage fail , don`t find image data , format=%d", pImage->format);
-                break;
-        }
-
+        free(pImage->ppPlane[0]);
         pImage->ppPlane[0] = nullptr;
         pImage->ppPlane[1] = nullptr;
         pImage->ppPlane[2] = nullptr;
@@ -98,6 +73,11 @@ public:
                 LOGCATD("start copy new  data");
                 memcpy(pDstImg->ppPlane[0], pSrcImg->ppPlane[0], pSrcImg->width * pSrcImg->height * 4);
                 break;
+
+            case IMAGE_FORMAT_NV12:
+            case IMAGE_FORMAT_NV21:
+                memcpy(pDstImg->ppPlane[0], pSrcImg->ppPlane[0], pSrcImg->width * pSrcImg->height * 1.5);
+                break;
             default:
                 LOGCATE("CopyNativeImage fail , don`t find image copy way , format=%d", pSrcImg->format);
                 break;
@@ -110,7 +90,7 @@ public:
 
         switch (pImage->format) {
             case IMAGE_FORMAT_RGBA:
-                pImage->ppPlane[0] = (uint8_t *)malloc(pImage->width * pImage->height * 4);
+                pImage->ppPlane[0] = static_cast<uint8_t *>(malloc(pImage->width * pImage->height * 4));
                 break;
 
             case IMAGE_FORMAT_YUYV:
@@ -119,6 +99,8 @@ public:
 
             case IMAGE_FORMAT_NV21:
             case IMAGE_FORMAT_NV12:
+                pImage->ppPlane[0] = static_cast<uint8_t *>(malloc(pImage->width * pImage->height * 1.5));
+                pImage->ppPlane[1] = pImage->ppPlane[0] + pImage->width * pImage->height;
                 break;
 
             case IMAGE_FORMAT_I420:

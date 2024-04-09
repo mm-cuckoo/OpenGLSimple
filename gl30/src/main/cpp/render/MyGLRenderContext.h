@@ -6,6 +6,7 @@
 #include "TriangleSample.h"
 #include "TextureMapSample.h"
 #include "ImageDef.h"
+#include "NV21TextureMapSample.h"
 
 class MyGLRenderContext {
 

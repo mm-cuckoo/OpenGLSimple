@@ -14,6 +14,10 @@
         <activity
             android:name=".ui.activity.TextureActivity">
         </activity>
+
+        <activity
+            android:name=".ui.activity.YUVTextureActivity">
+        </activity>
     </application>
 
 </manifest>

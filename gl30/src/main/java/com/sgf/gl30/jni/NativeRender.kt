@@ -9,6 +9,7 @@ class NativeRender {
         private const val SAMPLE_TYPE                   = 200
         const val SAMPLE_TYPE_TRIANGLE                  = SAMPLE_TYPE
         const val SAMPLE_TYPE_TEXTURE_MAP               = SAMPLE_TYPE + 1
+        const val SAMPLE_TYPE_YUV_TEXTURE_MAP           = SAMPLE_TYPE_TEXTURE_MAP + 1
     }
 
     external fun native_Test() : String

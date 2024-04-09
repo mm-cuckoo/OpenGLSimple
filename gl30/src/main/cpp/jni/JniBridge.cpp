@@ -24,7 +24,10 @@ JNIEXPORT void JNICALL native_OnUnInit(JNIEnv *env , jobject instance) {
     MyGLRenderContext::DestroyInstance();
 }
 
-JNIEXPORT void JNICALL native_SetRenderTypeAndShader(JNIEnv *env, jobject instance, jint type, jstring vShaderStr, jstring fShadertSr) {
+/**
+ * 设置gl顶点着色器和片源着色器
+ */
+JNIEXPORT void JNICALL native_SetRenderTypeAndShader(JNIEnv *env,  jobject instance, jint type, jstring vShaderStr, jstring fShadertSr) {
     const char * pVShader = env->GetStringUTFChars(vShaderStr, nullptr);
     const int pVShaderStrLen = env->GetStringUTFLength(vShaderStr);
     char * pvs = new char [pVShaderStrLen];
