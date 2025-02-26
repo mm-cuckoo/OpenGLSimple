@@ -121,32 +121,13 @@ void TextureMapSample::Draw(int screenW, int screenH) {
     GLushort indices[] = {0,1,2,
                            0,2,3};
 
-//    //激活纹理单元 0
-//    glActiveTexture(GL_TEXTURE0);
-//    // 将纹理绑定到纹理单元
-//    glBindTexture(GL_TEXTURE_2D, m_TextureId);
-//    // 将图片数据设置到纹理上
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage.width, m_RenderImage.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_RenderImage.ppPlane[0]);
-//    // 解除纹理关联
-//    glBindTexture(GL_TEXTURE_2D, GL_NONE);
-
-    glUseProgram(m_ProgramObj);
-    // 设置顶点坐标
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), verticeCoords);
-    // 设置纹理坐标
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2* sizeof(GLfloat), textureCoords);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-/**
- * 纹理的使用
- * 1. 激活纹理单元
- * 2. 绑定纹理id
- * 3. 设置纹理
- * 4. 使用glUniform1i 通知采样器，让其知道它代表的时纹理单元
- */
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, m_TextureId);
+    /**
+     * 更新纹理数据
+     * 1. 激活纹理单元
+     * 2. 绑定纹理id
+     * 3. 设置纹理
+     * 4. 解除纹理关联
+     */
     //激活纹理单元 0
     glActiveTexture(GL_TEXTURE0);
     // 将纹理绑定到纹理单元
@@ -154,9 +135,30 @@ void TextureMapSample::Draw(int screenW, int screenH) {
     // 将图片数据设置到纹理上
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage.width, m_RenderImage.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_RenderImage.ppPlane[0]);
     // 解除纹理关联
-//    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+    glBindTexture(GL_TEXTURE_2D, GL_NONE);
+
+    // 使用open gl 程序
+    glUseProgram(m_ProgramObj);
+    // 设置顶点坐标
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), verticeCoords);
+    // 设置纹理坐标
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2* sizeof(GLfloat), textureCoords);
+
+    // 设置顶点参数可用
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+/**
+ * 1. 激活纹理单元
+ * 2. 绑定纹理id
+ * 3. 设置纹理
+ * 4. 使用glUniform1i 通知采样器，让其知道它代表的时纹理单元
+ */
+    //激活纹理单元 0
+    glActiveTexture(GL_TEXTURE0);
+    // 将纹理绑定到纹理单元
+    glBindTexture(GL_TEXTURE_2D, m_TextureId);
     // 通知采样器，让其知道它代表的时纹理单元GL_TEXTURE0
-    glUniform1i(m_SamplerLoc, GL_TEXTURE0);
+    glUniform1i(m_SamplerLoc, GL_NONE);
 
     glDrawElements(GL_TRIANGLES, 6 , GL_UNSIGNED_SHORT, indices);
 
