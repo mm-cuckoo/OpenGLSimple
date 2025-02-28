@@ -85,7 +85,7 @@ void MyGLRenderContext::SetImageData(int format, int width, int height, uint8_t 
     switch (format) {
         case IMAGE_FORMAT_NV12:
         case IMAGE_FORMAT_NV21:
-            // 数组指针偏移
+            // 数组指针偏移,装UV分量
             nativeImage.ppPlane[1] = nativeImage.ppPlane[0] + width *  height;
             break;
         case IMAGE_FORMAT_I420:

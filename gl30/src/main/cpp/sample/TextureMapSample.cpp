@@ -40,26 +40,25 @@ TextureMapSample::~TextureMapSample() {
 
 void TextureMapSample::Init() {
 
-    // 生成一个纹理，将纹理 id 赋值给 m_TextureId
-    glGenTextures(1, &m_TextureId);
-    // 将纹理 m_TextureId 绑定到类型 GL_TEXTURE_2D 纹理
-    glBindTexture(GL_TEXTURE_2D,m_TextureId);
-    //设置纹理 S 轴（横轴）的拉伸方式为截取
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    //设置纹理 T 轴（纵轴）的拉伸方式为截取
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    //设置纹理采样方式
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // 解除纹理关联
-    glBindTexture(GL_TEXTURE_2D, GL_NONE);
-
     m_ProgramObj = GLUtils::CreateProgram(pVShader, pFShader, m_VertexShader, m_FragmentShader);
     if (m_ProgramObj) {
         // 获取片源 s_TextureMap 的句柄
         LOGCATD("gl program create success ");
         m_SamplerLoc = glGetUniformLocation(m_ProgramObj, "s_TextureMap");
+        // 生成一个纹理，将纹理 id 赋值给 m_TextureId
+        glGenTextures(1, &m_TextureId);
+        // 将纹理 m_TextureId 绑定到类型 GL_TEXTURE_2D 纹理
+        glBindTexture(GL_TEXTURE_2D,m_TextureId);
+        //设置纹理 S 轴（横轴）的拉伸方式为截取
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        //设置纹理 T 轴（纵轴）的拉伸方式为截取
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        //设置纹理采样方式
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        // 解除纹理关联
+        glBindTexture(GL_TEXTURE_2D, GL_NONE);
     } else {
         LOGCATE("create gl program fail");
     }

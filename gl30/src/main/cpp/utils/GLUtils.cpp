@@ -52,6 +52,7 @@ GLuint GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFrag
         if (!fragShaderHandler) return program;
 
         program = glCreateProgram();
+        LOGCATD("GLUtils::CreateProgram:program code:%d", program);
         if (program) {
             glAttachShader(program, vertexShaderHandler);
             CheckGLError("glAttachShader-v");

@@ -6,6 +6,7 @@
 #define OPENGLSIMPLE_NV21TEXTUREMAPSAMPLE_H
 
 #include "GLSampleBase.h"
+#include "GLUtils.h"
 
 class NV21TextureMapSample : public GLSampleBase {
 public:
@@ -19,6 +20,10 @@ public:
 
 protected:
     NativeImage m_RenderImage;
+    GLuint m_yuvYLoc;
+    GLuint m_yuvUVLoc;
+    GLuint m_ytextureId;
+    GLuint m_uvtextureId;
 };
 
 
